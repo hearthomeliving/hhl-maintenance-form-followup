@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>HAHL maintenance request</title>
+<title>HAHL maintenance follow-up</title>
 <meta name="theme-color" content="#0c4145">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="HAHL Maintenance">
+<meta name="apple-mobile-web-app-title" content="HAHL Follow-Up">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -22,15 +22,6 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
-.proto-banner {
-  background: #fef3c7;
-  color: #78350f;
-  padding: 10px 16px;
-  font-size: 13px;
-  text-align: center;
-  border-bottom: 1px solid #fde68a;
-}
-.proto-banner strong { font-weight: 600; }
 .shell {
   max-width: 480px;
   margin: 16px auto;
@@ -47,7 +38,7 @@ header.app-header {
   align-items: center;
   justify-content: space-between;
 }
-header.app-header h1 {
+header.app-header .title-block h1 {
   margin: 0;
   font-size: 16px;
   font-weight: 500;
@@ -56,21 +47,19 @@ header.app-header .subtitle {
   font-size: 12px;
   opacity: 0.7;
   font-weight: 400;
+  margin-top: 2px;
 }
-.progress {
-  display: flex;
-  gap: 4px;
-  padding: 12px 20px 0;
+header.app-header .settings-cog {
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.7;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: none;
+  border: none;
+  color: #ffffff;
 }
-.progress span {
-  flex: 1;
-  height: 3px;
-  background: #e5e7eb;
-  border-radius: 2px;
-  transition: background-color 0.2s;
-}
-.progress span.done { background: #469B82; }
-.progress span.active { background: #0c4145; }
+header.app-header .settings-cog:hover { opacity: 1; background: rgba(255,255,255,0.1); }
 main.screen {
   padding: 16px 20px 24px;
   min-height: 320px;
@@ -96,27 +85,7 @@ main.screen {
   color: #4b5563;
   margin: 0 0 16px;
 }
-.field {
-  margin-bottom: 14px;
-}
-.field-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: #374151;
-  margin-bottom: 6px;
-}
-.field-label .req {
-  color: #dc2626;
-  margin-left: 2px;
-}
-.field-help {
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 4px;
-  line-height: 1.5;
-}
-input[type=text], input[type=tel], input[type=email], input[type=datetime-local], select, textarea {
+input[type=text], input[type=tel], input[type=email], input[type=url], select, textarea {
   width: 100%;
   padding: 10px 12px;
   font-size: 15px;
@@ -136,180 +105,233 @@ textarea {
   resize: vertical;
   line-height: 1.5;
 }
-.check-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.check-item {
-  display: flex;
-  gap: 10px;
-  padding: 10px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  background: #ffffff;
-  cursor: pointer;
-  transition: background-color 0.15s, border-color 0.15s;
-  align-items: flex-start;
-}
-.check-item:hover { background: #f9fafb; }
-.check-item input { margin-top: 3px; flex-shrink: 0; }
-.check-item.checked { background: #ecfdf5; border-color: #6ee7b7; }
-.check-item.danger { background: #fef2f2; border-color: #fecaca; }
-.check-item.danger.checked { background: #fee2e2; border-color: #fca5a5; }
-.check-item label { font-size: 14px; flex: 1; line-height: 1.5; cursor: pointer; }
-.skip-reason {
-  margin-top: 6px;
-  display: none;
-}
-.check-item.skipped .skip-reason { display: block; }
-.skip-reason input {
+.field { margin-bottom: 14px; }
+.field-label {
+  display: block;
   font-size: 13px;
-  padding: 6px 8px;
-}
-.skip-link {
-  font-size: 12px;
-  color: #6b7280;
-  text-decoration: underline;
-  cursor: pointer;
-  margin-left: auto;
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  padding: 0;
-}
-.severity-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-.suggestion-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 8px;
-  min-height: 40px;
-}
-.sev-pill {
-  flex: 1;
-  min-width: 80px;
-  padding: 12px 8px;
-  text-align: center;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: #ffffff;
-  cursor: pointer;
-  font-size: 14px;
   font-weight: 500;
   color: #374151;
-  transition: all 0.15s;
+  margin-bottom: 6px;
 }
-.sev-pill:hover { border-color: #9ca3af; }
-.sev-pill.selected { border-color: #0c4145; background: #0c4145; color: #ffffff; }
-.sev-pill .sub { display: block; font-size: 11px; font-weight: 400; margin-top: 2px; opacity: 0.85; }
-.photo-uploader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  border: 2px dashed #d1d5db;
-  border-radius: 10px;
-  padding: 16px;
-  text-align: center;
+.field-help {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+/* Task summary card */
+.summary-card {
   background: #f9fafb;
-  cursor: pointer;
-  transition: border-color 0.15s;
-  font-size: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+.summary-card .reference {
+  display: inline-block;
+  background: #0c4145;
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.summary-card .home-line {
+  font-size: 15px;
+  font-weight: 500;
+  color: #0c4145;
+  margin-bottom: 4px;
+}
+.summary-card .category-line {
+  font-size: 13px;
   color: #4b5563;
+  margin-bottom: 10px;
 }
-.photo-uploader:hover { border-color: #0c4145; }
-.photo-uploader input { display: none; }
-.photo-uploader .icon {
-  font-size: 24px;
-  line-height: 1;
+.summary-card .description {
+  font-size: 14px;
+  color: #1f2937;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
-.photo-list {
+.summary-card .meta {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+/* Photos */
+.photo-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
-.photo-tile {
+.photo-thumb {
   aspect-ratio: 1;
-  background: #e5e7eb;
-  border-radius: 6px;
+  background-color: #e5e7eb;
   background-size: cover;
   background-position: center;
-  position: relative;
-}
-.photo-tile .remove {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  background: rgba(0,0,0,0.6);
-  color: white;
+  border-radius: 8px;
+  cursor: pointer;
   border: none;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  font-size: 14px;
-  line-height: 1;
+  padding: 0;
+}
+.photo-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 20px;
   cursor: pointer;
 }
-.warn-banner {
-  background: #fef3c7;
-  border: 1px solid #fde68a;
-  color: #78350f;
-  padding: 10px 12px;
+.photo-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
   border-radius: 8px;
-  font-size: 13px;
-  margin-bottom: 12px;
-  line-height: 1.5;
 }
-.danger-banner {
-  background: #fee2e2;
-  border: 1px solid #fca5a5;
-  color: #7f1d1d;
-  padding: 12px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
-.info-banner {
-  background: #dbeafe;
-  border: 1px solid #93c5fd;
-  color: #1e3a8a;
-  padding: 10px 12px;
-  border-radius: 8px;
-  font-size: 13px;
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
-.summary-card {
-  background: #f9fafb;
-  border-radius: 10px;
+
+/* Contractor card */
+.contractor-card {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 12px;
   padding: 14px;
+  margin-bottom: 18px;
+}
+.contractor-card .trade-badge {
+  display: inline-block;
+  background: #10b981;
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+.contractor-card .name {
+  font-size: 17px;
+  font-weight: 600;
+  color: #064e3b;
+  margin-bottom: 10px;
+}
+.contractor-card .contact-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 1px solid #a7f3d0;
   font-size: 14px;
 }
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
-  gap: 10px;
+.contractor-card .contact-row:first-of-type { border-top: none; padding-top: 4px; }
+.contractor-card .contact-row .icon {
+  width: 20px;
+  color: #059669;
+  font-weight: 600;
+  flex-shrink: 0;
+  text-align: center;
 }
-.summary-row .label { color: #6b7280; flex-shrink: 0; }
-.summary-row .value { text-align: right; word-break: break-word; }
-.summary-row.block { flex-direction: column; }
-.summary-row.block .value { text-align: left; margin-top: 4px; }
-.payload-preview {
-  background: #1f2937;
-  color: #e5e7eb;
-  padding: 12px;
-  border-radius: 8px;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 11px;
+.contractor-card .contact-row a {
+  color: #047857;
+  text-decoration: none;
+  font-weight: 500;
+  word-break: break-all;
+}
+.contractor-card .contact-row a:hover { text-decoration: underline; }
+.contractor-card .notes {
+  font-size: 13px;
+  color: #065f46;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #a7f3d0;
+  font-style: italic;
   line-height: 1.5;
-  overflow-x: auto;
-  white-space: pre;
-  margin-top: 12px;
 }
+
+/* Manager notes so far */
+.notes-so-far {
+  background: #fefce8;
+  border: 1px solid #fde68a;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: #713f12;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.5;
+}
+.notes-so-far .label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #92400e;
+}
+
+/* Action buttons (main screen) */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.action-btn {
+  padding: 16px 18px;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: inherit;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.15s;
+}
+.action-btn .icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+.action-btn .label-block { flex: 1; }
+.action-btn .label-main { font-size: 16px; font-weight: 500; margin-bottom: 2px; }
+.action-btn .label-sub { font-size: 12px; opacity: 0.75; font-weight: 400; }
+.action-btn.complete {
+  background: #10b981;
+  color: #ffffff;
+}
+.action-btn.complete:hover { background: #059669; }
+.action-btn.notes {
+  background: #ffffff;
+  color: #1f2937;
+  border-color: #d1d5db;
+}
+.action-btn.notes:hover { background: #f9fafb; border-color: #9ca3af; }
+.action-btn.escalate {
+  background: #fee2e2;
+  color: #7f1d1d;
+  border-color: #fca5a5;
+}
+.action-btn.escalate:hover { background: #fecaca; }
+
+/* Nav (secondary screens) */
 .nav {
   display: flex;
   gap: 8px;
@@ -332,1511 +354,649 @@ textarea {
 .btn-primary:disabled { background: #9ca3af; cursor: not-allowed; }
 .btn-secondary { background: #ffffff; color: #374151; border-color: #d1d5db; }
 .btn-secondary:hover { background: #f9fafb; }
+.btn-success { background: #10b981; color: #ffffff; }
+.btn-success:hover { background: #059669; }
 .btn-danger { background: #dc2626; color: #ffffff; }
-.success-icon {
-  width: 56px;
-  height: 56px;
-  background: #d1fae5;
+.btn-danger:hover { background: #b91c1c; }
+
+/* Banners */
+.warn-banner {
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #78350f;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.danger-banner {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #7f1d1d;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* Success/error states */
+.result-icon {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 8px auto;
-  font-size: 28px;
-  color: #047857;
+  font-size: 32px;
+  margin: 24px auto 16px;
+  font-weight: 600;
 }
-.ref-num {
+.result-icon.success { background: #d1fae5; color: #059669; }
+.result-icon.warn { background: #fef3c7; color: #b45309; }
+.result-icon.error { background: #fee2e2; color: #dc2626; }
+.result-title {
   text-align: center;
-  font-family: ui-monospace, monospace;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
-  padding: 10px;
-  background: #f3f4f6;
-  border-radius: 8px;
-  letter-spacing: 0.05em;
+  color: #0c4145;
+  margin: 0 0 8px;
 }
-.next-steps { font-size: 13px; line-height: 1.65; color: #4b5563; }
-.next-steps strong { color: #1f2937; font-weight: 500; }
-.section-ref {
-  font-size: 11px;
-  color: #9ca3af;
-  margin-top: 12px;
-  text-align: right;
-}
-.foot-note {
-  font-size: 11px;
-  color: #6b7280;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid #f3f4f6;
+.result-body {
+  text-align: center;
+  font-size: 14px;
+  color: #4b5563;
+  margin: 0 0 16px;
+  padding: 0 8px;
   line-height: 1.5;
 }
-.settings-footer { text-align: center; margin: 12px auto 24px; font-size: 12px; color: #6b7280; }
-.settings-footer button { background: none; border: none; color: #0c4145; text-decoration: underline; cursor: pointer; font-size: 12px; padding: 4px 8px; font-family: inherit; }
-.settings-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 16px; }
-.settings-modal { background: #ffffff; border-radius: 12px; max-width: 480px; width: 100%; padding: 20px 22px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); max-height: 90vh; overflow-y: auto; }
-.settings-modal h2 { margin: 0 0 4px; font-size: 18px; color: #0c4145; font-weight: 500; }
-.settings-modal p.lede { margin: 0 0 16px; font-size: 13px; color: #4b5563; line-height: 1.5; }
-.settings-modal .actions { display: flex; gap: 8px; margin-top: 16px; }
-.settings-modal .actions button { flex: 1; }
-@media (max-width: 520px) {
+
+/* Loading spinner */
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #0c4145;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 40px auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Modal (settings) */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 998;
+  padding: 20px;
+}
+.modal {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 420px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal h2 { margin: 0 0 12px; font-size: 18px; color: #0c4145; }
+.modal .modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.modal .modal-actions button {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-family: inherit;
+}
+
+@media (max-width: 480px) {
   .shell { margin: 0; border-radius: 0; box-shadow: none; }
   body { background: #ffffff; }
 }
 </style>
 </head>
 <body>
-
-
-<div class="shell">
-  <header class="app-header">
-    <div>
-      <h1>Maintenance request</h1>
-      <div class="subtitle">Heart &amp; Home Living</div>
-    </div>
-    <div class="subtitle" id="step-counter">1 of 9</div>
-  </header>
-  <div class="progress" id="progress"></div>
-  <main class="screen" id="screen"></main>
-</div>
-
-<div class="settings-footer">
-  <button type="button" onclick="openSettings()">Settings</button>
-</div>
-
-<div id="settings-overlay" class="settings-overlay" style="display: none;"></div>
-
+  <div class="shell">
+    <header class="app-header">
+      <div class="title-block">
+        <h1>Maintenance follow-up</h1>
+        <div class="subtitle" id="ref-subtitle">Loading...</div>
+      </div>
+      <button class="settings-cog" onclick="openSettings()" aria-label="Settings">&#9881;</button>
+    </header>
+    <main class="screen" id="screen"></main>
+  </div>
+  <div id="modal-root"></div>
 <script>
-const HOMES = ['Aurora', 'Lyra', 'Orion', 'Cygnus', 'Leo', 'Lynx', 'Phoenix House', 'Pegasus House', 'Vela House'];
-const ROLES = ['House Manager', 'Deputy Manager', 'Senior Support Worker', 'Support Worker', 'RI'];
-const ROOMS = ['Kitchen', 'Living room', 'Dining room', 'Hallway', 'Stairs / landing', 'Bathroom (main)', 'Bathroom (ensuite)', 'Bedroom 1', 'Bedroom 2', 'Bedroom 3', 'Bedroom 4', 'Office / staff room', 'Garden', 'External / driveway', 'Garage / shed', 'Whole house', 'Other'];
+'use strict';
 
-const EMERGENCY_999 = [
-  'Fire or smoke in the building',
-  'Smell of gas that will not clear',
-  'Structural collapse (ceiling, wall, floor)',
-  'Flooding creating serious electrical danger',
-  'Someone seriously hurt or trapped'
-];
-
-const ONCALL = [
-  'Property cannot be made secure (broken door or accessible window)',
-  'Smashed window in a communal area where broken glass risks a child',
-  'Major water leak that cannot be stopped',
-  'Entire fire alarm system is down with no detection',
-  'A child relies on a medical device requiring electricity and the power is out'
-];
-
-const PRE_CHECKS = [
-  'It is plugged in and the socket is switched on',
-  'You have checked the fuse board for tripped switches',
-  'You have identified whether the issue is in one room or the whole house',
-  'You have checked whether anyone changed the controls, thermostat, or timer',
-  'You have looked for an obvious blockage (hair, food, object)',
-  'You have tried any simple reset button on the appliance or boiler'
-];
-
-const SOP = {
-  'Heating, boiler or hot water': {
-    gates: [
-      'Thermostat set above current room temperature',
-      'Timer or programmer set correctly (clocks recently changed?)',
-      'Boiler display checked for error code (note the code if shown)',
-      'Boiler pressure gauge reads between 1.0 and 1.5 bar',
-      'Boiler reset button pressed once, waited two minutes',
-      'Confirmed other rooms have heating'
-    ],
-    urgent: [
-      'A medically vulnerable child is in the home and temperature is dangerously low',
-      'Boiler making unusual noises, leaking water, or smell of gas',
-      'No way to keep children warm tonight'
-    ],
-    ref: 'Manual sections 6.1, 6.2, 6.3'
-  },
-  'Radiator cold': {
-    gates: [
-      'Radiator valve fully open (turn anti-clockwise)',
-      'Other radiators in the house are working',
-      'Top of radiator cold and bottom warm (would need bleeding)'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.4'
-  },
-  'Power cut': {
-    gates: [
-      'Checked whether street lights or neighbours are also affected',
-      'Fuse board main switch position checked',
-      'Main switch reset once (not repeatedly)',
-      'Checked powercuts.nationalgrid.co.uk or called 105'
-    ],
-    urgent: [
-      'A child relies on a medical device that requires electricity',
-      'Burning smell from the fuse board or any socket'
-    ],
-    ref: 'Manual section 6.5'
-  },
-  'Lights not working': {
-    gates: [
-      'Light switch confirmed on',
-      'Bulb replaced (if safe to reach)',
-      'Fuse board checked for tripped lighting circuit',
-      'Checked whether other rooms are affected or just this one'
-    ],
-    urgent: [
-      'A light fitting is sparking, smoking, or smells of burning'
-    ],
-    ref: 'Manual section 6.6'
-  },
-  'Sockets not working': {
-    gates: [
-      'Tried the appliance in a different socket',
-      'Tried a different appliance in the same socket',
-      'Fuse board checked for tripped circuit',
-      'Socket switch confirmed turned on'
-    ],
-    urgent: [
-      'Socket scorched, discoloured, hot to touch, or smells of burning'
-    ],
-    ref: 'Manual section 6.7'
-  },
-  'Fuse board tripped': {
-    gates: [
-      'Identified which switch tripped',
-      'Reset the switch once',
-      'Unplugged appliances on that circuit if it tripped again'
-    ],
-    urgent: [
-      'Main switch keeps tripping, whole house without power',
-      'Burning smell or scorch marks on the fuse board'
-    ],
-    ref: 'Manual section 6.8'
-  },
-  'Oven (kitchen)': {
-    gates: [
-      'Oven plugged in, socket switched on',
-      'Clock or timer set correctly (many ovens need this)',
-      'Fuse board checked for tripped circuit',
-      'Oven door fully closed'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.9'
-  },
-  'Hob (kitchen)': {
-    gates: [
-      'Hob plugged in, socket switched on (if electric)',
-      'Fuse board checked',
-      'Other gas appliances confirmed working (if gas)',
-      'Tried the oven to test power supply'
-    ],
-    urgent: [
-      'Smell of gas — do not switch anything on, evacuate, call 999 and 0800 111 999'
-    ],
-    ref: 'Manual section 6.10'
-  },
-  'Fridge or freezer': {
-    gates: [
-      'Plugged in, socket switched on',
-      'Temperature dial set correctly',
-      'Doors not being left open',
-      'Back of fridge checked for ice or blockages',
-      'Tested socket with another appliance'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.11'
-  },
-  'Dishwasher': {
-    gates: [
-      'Plugged in, socket switched on',
-      'Door fully closed and latched',
-      'Fuse board checked',
-      'Drain filter cleaned',
-      'Short cycle run with no dishes (tests drain)'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.12'
-  },
-  'Washing machine': {
-    gates: [
-      'Plugged in, socket switched on',
-      'Door fully closed and locked',
-      'Fuse board checked',
-      'Filter and drain checked for blockages',
-      'Hot water tap behind machine confirmed on'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.13'
-  },
-  'Tumble dryer': {
-    gates: [
-      'Plugged in, socket switched on',
-      'Door fully closed',
-      'Fuse board checked',
-      'Lint filter cleaned thoroughly'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.14'
-  },
-  'Blocked sink': {
-    gates: [
-      'Plug or strainer removed and checked',
-      'Visible debris removed if safe',
-      'Under-sink checked for leaks',
-      'Plunger or boiling water attempted'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.15'
-  },
-  'Blocked toilet': {
-    gates: [
-      'Cistern water level checked',
-      'Obvious blockage removed if safe',
-      'Plunger used (several firm plunges)',
-      'Other toilets in the home checked'
-    ],
-    urgent: [
-      'All toilets in the home including the staff toilet are blocked'
-    ],
-    ref: 'Manual sections 6.16, 6.20'
-  },
-  'Leaking tap': {
-    gates: [
-      'Tap fully closed',
-      'Leak source identified (tap or under-sink)',
-      'Bucket placed under leak',
-      'Isolation valve checked under sink'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.17'
-  },
-  'Major leak': {
-    gates: [
-      'Main water stop tap turned off',
-      'Children moved away from the leak',
-      'Electrics turned off if water near sockets',
-      'Water collection started (mops, buckets)'
-    ],
-    urgent: [
-      'Major uncontrollable water leak',
-      'Water near electrics or fuse board',
-      'Water coming from ceiling or inside walls'
-    ],
-    ref: 'Manual section 6.18'
-  },
-  'Shower not working': {
-    gates: [
-      'Hot water works in taps',
-      'Shower valve or mixer valve checked',
-      'Shower head checked for limescale or blockage'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.19'
-  },
-  'Internal door': {
-    gates: [
-      'Door opens and closes safely',
-      'No visible damage to hinges or handles',
-      'Handle screw tightened if visible'
-    ],
-    urgent: [
-      'A child is locked in a room and you cannot open the door'
-    ],
-    ref: 'Manual section 6.23'
-  },
-  'Front door or lock': {
-    gates: [
-      'Tried a different key',
-      'Lock checked for damage or jam',
-      'Back bolt or chain attempted as backup',
-      'Confirmed bolt is engaging'
-    ],
-    urgent: [
-      'Front door cannot be locked and the property is insecure'
-    ],
-    ref: 'Manual section 6.24'
-  },
-  'Window broken or damaged': {
-    gates: [
-      'Children moved away from broken glass',
-      'Glass not touched with bare hands',
-      'Room locked off if possible',
-      'Property security assessed'
-    ],
-    urgent: [
-      'Smashed window in a communal area (living room, kitchen, hallway)',
-      'Smashed window in occupied bedroom with no alternative room',
-      'Ground floor or accessible window smashed and property insecure'
-    ],
-    ref: 'Manual section 6.22'
-  },
-  'Fire safety (alarm or fire door)': {
-    gates: [
-      'Confirmed no actual fire or smoke',
-      'Battery checked (low battery beeps every minute)',
-      'Battery replaced if safe to reach',
-      'Fire door checked for full close'
-    ],
-    urgent: [
-      'Entire fire alarm system down with no detection'
-    ],
-    ref: 'Manual section 6.25'
-  },
-  'Fence or gate damage': {
-    gates: [
-      'Property security assessed',
-      'Risk to children checked (splinters, sharp edges)',
-      'Escape or intruder access risk assessed'
-    ],
-    urgent: [
-      'Damage so severe that children could escape or intruders enter'
-    ],
-    ref: 'Manual section 6.30'
-  },
-  'Lost keys or lock': {
-    gates: [
-      'Searched obvious places',
-      'Asked all staff for spare key',
-      'Checked whether room can be unlocked from outside'
-    ],
-    urgent: [
-      'A child is locked in a room and you cannot open the door'
-    ],
-    ref: 'Manual section 6.31'
-  },
-  'Broken bed or furniture': {
-    gates: [
-      'Bed safety assessed',
-      'Sharp edges or collapse risk checked',
-      'Alternative sleeping arrangement available'
-    ],
-    urgent: [
-      'Bed unsafe (collapse or injury risk) and no alternative sleeping provision'
-    ],
-    ref: 'Manual section 6.21'
-  },
-  'Damp or mould': {
-    gates: [
-      'Recently painted area ruled out',
-      'Leak from above checked',
-      'Condensation from bathroom or cooking considered',
-      'Window and door seals checked'
-    ],
-    urgent: [
-      'Significant mould growth or water leaking from above'
-    ],
-    ref: 'Manual section 6.28'
-  },
-  'Pests (insects, rodents, wasps)': {
-    gates: [
-      'Pest identified if safe',
-      'Entry point checked',
-      'Food sources and waste checked'
-    ],
-    urgent: [
-      "Wasps' nest inside the house or in a child's bedroom",
-      'Significant rat infestation with droppings in food prep areas'
-    ],
-    ref: 'Manual section 6.29'
-  },
-  'Internet or Wi-Fi': {
-    gates: [
-      'Router plugged in and switched on',
-      'Cables connected',
-      'Other devices can connect',
-      'Router restarted (off for 30 seconds, then on)'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.26 — if unresolved, BitTech IT (support@bittechit.co.uk).'
-  },
-  'Garden or external': {
-    gates: [
-      'Issue identified',
-      'Risk to children assessed',
-      'Property security checked'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.30 (related)'
-  },
-  'Thermostat confusion': {
-    gates: [
-      'Current temperature setting checked',
-      'Confirmed it has not been accidentally changed',
-      'Mode checked (heat, cool, auto)'
-    ],
-    urgent: [],
-    ref: 'Manual section 6.27'
-  },
-  'Other (not listed above)': {
-    gates: [
-      'Universal pre-report checks completed',
-      'Issue is not an emergency or immediate safeguarding risk'
-    ],
-    urgent: [],
-    ref: 'Use this when no category fits. Describe fully below.'
-  }
-};
-
-// Synonym map: words the user might type -> categories to surface
-// Used by the Step 3 typeahead to map plain English to SOP categories.
-const SYNONYM_MAP = {
-  'door': ['Front door or lock', 'Internal door', 'Lost keys or lock'],
-  'lock': ['Front door or lock', 'Lost keys or lock', 'Internal door'],
-  'jam': ['Front door or lock', 'Internal door'],
-  'jammed': ['Front door or lock', 'Internal door'],
-  'handle': ['Front door or lock', 'Internal door'],
-  'key': ['Lost keys or lock', 'Front door or lock'],
-  'keys': ['Lost keys or lock', 'Front door or lock'],
-  'lost': ['Lost keys or lock'],
-  'leak': ['Major leak', 'Leaking tap'],
-  'leaking': ['Major leak', 'Leaking tap'],
-  'drip': ['Leaking tap', 'Major leak'],
-  'dripping': ['Leaking tap', 'Major leak'],
-  'water': ['Major leak', 'Leaking tap', 'Blocked sink', 'Blocked toilet'],
-  'flood': ['Major leak'],
-  'flooding': ['Major leak'],
-  'tap': ['Leaking tap'],
-  'faucet': ['Leaking tap'],
-  'sink': ['Blocked sink', 'Leaking tap'],
-  'drain': ['Blocked sink', 'Blocked toilet'],
-  'toilet': ['Blocked toilet'],
-  'loo': ['Blocked toilet'],
-  'wc': ['Blocked toilet'],
-  'shower': ['Shower not working'],
-  'heat': ['Heating, boiler or hot water', 'Radiator cold'],
-  'heating': ['Heating, boiler or hot water', 'Radiator cold'],
-  'cold': ['Heating, boiler or hot water', 'Radiator cold'],
-  'freezing': ['Heating, boiler or hot water'],
-  'boiler': ['Heating, boiler or hot water'],
-  'hot': ['Heating, boiler or hot water'],
-  'warm': ['Heating, boiler or hot water'],
-  'radiator': ['Radiator cold', 'Heating, boiler or hot water'],
-  'rad': ['Radiator cold'],
-  'light': ['Lights not working'],
-  'lights': ['Lights not working'],
-  'bulb': ['Lights not working'],
-  'lamp': ['Lights not working'],
-  'dark': ['Lights not working', 'Power cut'],
-  'socket': ['Sockets not working', 'Power cut', 'Fuse board tripped'],
-  'sockets': ['Sockets not working'],
-  'plug': ['Sockets not working'],
-  'plugs': ['Sockets not working'],
-  'power': ['Power cut', 'Fuse board tripped', 'Sockets not working'],
-  'electric': ['Power cut', 'Fuse board tripped'],
-  'electricity': ['Power cut', 'Fuse board tripped'],
-  'fuse': ['Fuse board tripped'],
-  'fusebox': ['Fuse board tripped'],
-  'trip': ['Fuse board tripped'],
-  'tripped': ['Fuse board tripped'],
-  'breaker': ['Fuse board tripped'],
-  'oven': ['Oven (kitchen)'],
-  'hob': ['Hob (kitchen)'],
-  'stove': ['Hob (kitchen)', 'Oven (kitchen)'],
-  'cooker': ['Hob (kitchen)', 'Oven (kitchen)'],
-  'cook': ['Oven (kitchen)', 'Hob (kitchen)'],
-  'gas': ['Hob (kitchen)', 'Heating, boiler or hot water'],
-  'fridge': ['Fridge or freezer'],
-  'freezer': ['Fridge or freezer'],
-  'refrigerator': ['Fridge or freezer'],
-  'washing': ['Washing machine'],
-  'washer': ['Washing machine'],
-  'laundry': ['Washing machine', 'Tumble dryer'],
-  'dryer': ['Tumble dryer'],
-  'tumble': ['Tumble dryer'],
-  'dishwasher': ['Dishwasher'],
-  'dishes': ['Dishwasher'],
-  'window': ['Window broken or damaged'],
-  'glass': ['Window broken or damaged'],
-  'broken': ['Window broken or damaged', 'Broken bed or furniture'],
-  'smashed': ['Window broken or damaged'],
-  'cracked': ['Window broken or damaged'],
-  'alarm': ['Fire safety (alarm or fire door)'],
-  'alarms': ['Fire safety (alarm or fire door)'],
-  'fire': ['Fire safety (alarm or fire door)'],
-  'smoke': ['Fire safety (alarm or fire door)'],
-  'detector': ['Fire safety (alarm or fire door)'],
-  'beep': ['Fire safety (alarm or fire door)'],
-  'beeping': ['Fire safety (alarm or fire door)'],
-  'fence': ['Fence or gate damage'],
-  'fencing': ['Fence or gate damage'],
-  'gate': ['Fence or gate damage'],
-  'bed': ['Broken bed or furniture'],
-  'mattress': ['Broken bed or furniture'],
-  'furniture': ['Broken bed or furniture'],
-  'chair': ['Broken bed or furniture'],
-  'table': ['Broken bed or furniture'],
-  'wardrobe': ['Broken bed or furniture'],
-  'drawer': ['Broken bed or furniture'],
-  'damp': ['Damp or mould'],
-  'mould': ['Damp or mould'],
-  'mold': ['Damp or mould'],
-  'mildew': ['Damp or mould'],
-  'wet': ['Damp or mould', 'Major leak'],
-  'condensation': ['Damp or mould'],
-  'pest': ['Pests (insects, rodents, wasps)'],
-  'pests': ['Pests (insects, rodents, wasps)'],
-  'rat': ['Pests (insects, rodents, wasps)'],
-  'rats': ['Pests (insects, rodents, wasps)'],
-  'mouse': ['Pests (insects, rodents, wasps)'],
-  'mice': ['Pests (insects, rodents, wasps)'],
-  'wasp': ['Pests (insects, rodents, wasps)'],
-  'wasps': ['Pests (insects, rodents, wasps)'],
-  'bee': ['Pests (insects, rodents, wasps)'],
-  'bees': ['Pests (insects, rodents, wasps)'],
-  'insect': ['Pests (insects, rodents, wasps)'],
-  'insects': ['Pests (insects, rodents, wasps)'],
-  'ant': ['Pests (insects, rodents, wasps)'],
-  'ants': ['Pests (insects, rodents, wasps)'],
-  'cockroach': ['Pests (insects, rodents, wasps)'],
-  'wifi': ['Internet or Wi-Fi'],
-  'wi-fi': ['Internet or Wi-Fi'],
-  'internet': ['Internet or Wi-Fi'],
-  'router': ['Internet or Wi-Fi'],
-  'network': ['Internet or Wi-Fi'],
-  'broadband': ['Internet or Wi-Fi'],
-  'garden': ['Garden or external', 'Fence or gate damage'],
-  'outside': ['Garden or external'],
-  'driveway': ['Garden or external'],
-  'external': ['Garden or external'],
-  'patio': ['Garden or external'],
-  'thermostat': ['Thermostat confusion', 'Heating, boiler or hot water'],
-  'temperature': ['Thermostat confusion', 'Heating, boiler or hot water'],
-  'control': ['Thermostat confusion'],
-  'timer': ['Thermostat confusion', 'Heating, boiler or hot water']
-};
-
-const STEP_LABELS = ['Who and where', 'Safety check', 'Quick checks', 'What’s wrong', 'SOP steps', 'Urgent flags', 'Detail', 'Review', 'Sent'];
-const TOTAL_STEPS = 8;
-
-const SETTINGS_KEY = 'hahl-maintenance-settings-v1';
 const DEFAULT_SETTINGS = {
-  notify_mark_to: 'adrian@hearthomeliving.co.uk',
-  notify_emergency_to: 'laurence@hearthomeliving.co.uk',
-  notify_submitter_to_override: '',
-  webhook_url: 'https://ruthbloch.app.n8n.cloud/webhook/maintenance-v1-test',
+  load_webhook_url: 'https://ruthbloch.app.n8n.cloud/webhook/maintenance-followup-load',
+  submit_webhook_url: 'https://ruthbloch.app.n8n.cloud/webhook/maintenance-followup-submit',
   debug_mode: false
 };
-
-const MIN_PHOTO_BYTES = 10240; // 10 KB. Real phone photos are far larger; this blocks the PWA icon and other junk.
+const SETTINGS_KEY = 'hahl_followup_settings';
+const SETTINGS_PASSWORD = 'hhladmin-maintenance';
 
 function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
     if (!raw) return Object.assign({}, DEFAULT_SETTINGS);
-    const parsed = JSON.parse(raw);
-    return Object.assign({}, DEFAULT_SETTINGS, parsed);
-  } catch (e) {
-    return Object.assign({}, DEFAULT_SETTINGS);
-  }
+    return Object.assign({}, DEFAULT_SETTINGS, JSON.parse(raw));
+  } catch (e) { return Object.assign({}, DEFAULT_SETTINGS); }
 }
-
-function saveSettings(next) {
-  settings = Object.assign({}, settings, next);
-  try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {}
+function saveSettingsToStorage(s) {
+  try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); } catch (e) {}
 }
-
 let settings = loadSettings();
 
-const state = {
-  step: 0,
-  name: '',
-  role: ROLES[0],
-  home: '',
-  contactMethod: 'WhatsApp',
-  contactValue: '',
-  emergencyTicked: [],
-  emergencyLogged: false,
-  preChecks: {},
-  categoryQuery: '',
-  category: '',
-  gateStatus: {},
-  gateSkipReasons: {},
-  urgentTicked: [],
-  description: '',
-  rooms: [],
-  roomOther: '',
-  noticedAt: '',
-  photos: [],
-  childrenInArea: 'No',
-  refNumber: ''
+let state = {
+  screen: 'loading',
+  token: null,
+  task: null,
+  error: null,
+  errorDetail: '',
+  submitting: false,
+  actionNote: '',
+  actionType: null
 };
 
 function el(tag, attrs, children) {
   const e = document.createElement(tag);
-  if (attrs) {
-    Object.keys(attrs).forEach(k => {
-      const v = attrs[k];
-      if (v == null) return;
-      if (k === 'class') e.className = v;
-      else if (k === 'html') e.innerHTML = v;
-      else if (k.startsWith('on')) e.addEventListener(k.slice(2).toLowerCase(), v);
-      else e.setAttribute(k, v);
-    });
-  }
-  if (children) {
-    (Array.isArray(children) ? children : [children]).forEach(c => {
-      if (c == null) return;
-      if (typeof c === 'string') e.appendChild(document.createTextNode(c));
-      else e.appendChild(c);
-    });
-  }
+  if (attrs) Object.keys(attrs).forEach(function (k) {
+    const v = attrs[k];
+    if (v == null) return;
+    if (k === 'class') e.className = v;
+    else if (k === 'html') e.innerHTML = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2).toLowerCase(), v);
+    else e.setAttribute(k, v);
+  });
+  if (children) (Array.isArray(children) ? children : [children]).forEach(function (c) {
+    if (c == null) return;
+    if (typeof c === 'string') e.appendChild(document.createTextNode(c));
+    else e.appendChild(c);
+  });
   return e;
 }
+function root() { return document.getElementById('screen'); }
+function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+function setSubtitle(s) { document.getElementById('ref-subtitle').textContent = s || ''; }
 
-function renderProgress() {
-  const p = document.getElementById('progress');
-  p.innerHTML = '';
-  for (let i = 0; i < TOTAL_STEPS; i++) {
-    const s = document.createElement('span');
-    if (i < state.step) s.classList.add('done');
-    if (i === state.step) s.classList.add('active');
-    p.appendChild(s);
+const MOCK_TASK = {
+  ok: true,
+  reference: 'MAINT-2026-1234',
+  home: 'Aurora House',
+  category: 'Blocked kitchen sink',
+  rooms_display: 'Kitchen',
+  description: 'Sink in the kitchen will not drain. Tried baking soda and hot water yesterday, no change. Standing water still there this morning.',
+  submitted_at: '2026-07-28T09:15:00Z',
+  photos: [
+    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400',
+    'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400'
+  ],
+  manager_notes_so_far: '',
+  contractor: {
+    name: 'Bob’s Plumbing Ltd',
+    trade: 'Plumber',
+    phone: '07700 900123',
+    email: 'bob@bobsplumbing.example',
+    notes: 'Prefers WhatsApp for scheduling. Weekdays only.'
   }
-  document.getElementById('step-counter').textContent = (state.step + 1) + ' of ' + TOTAL_STEPS;
-}
-
-function selectField(name, value, options, opts) {
-  opts = opts || {};
-  const sel = el('select', { id: 'f-' + name, onchange: (e) => { state[name] = e.target.value; if (opts.onchange) opts.onchange(e.target.value); } });
-  options.forEach(o => {
-    const op = document.createElement('option');
-    if (typeof o === 'string') { op.value = o; op.textContent = o; }
-    else { op.value = o.value; op.textContent = o.label; }
-    if ((typeof o === 'string' ? o : o.value) === value) op.selected = true;
-    sel.appendChild(op);
-  });
-  return sel;
-}
-
-function textField(name, value, placeholder) {
-  return el('input', {
-    type: 'text', id: 'f-' + name, value: value || '', placeholder: placeholder || '',
-    oninput: (e) => state[name] = e.target.value
-  });
-}
-
-function field(labelText, inputEl, helpText, required) {
-  return el('div', { class: 'field' }, [
-    el('label', { class: 'field-label' }, [labelText, required ? el('span', { class: 'req' }, '*') : null]),
-    inputEl,
-    helpText ? el('div', { class: 'field-help' }, helpText) : null
-  ]);
-}
-
-function navButtons(opts) {
-  opts = opts || {};
-  const wrap = el('div', { class: 'nav' });
-  if (opts.back !== false) wrap.appendChild(el('button', { class: 'btn-secondary', onclick: back }, opts.backLabel || 'Back'));
-  wrap.appendChild(el('button', {
-    class: opts.primaryClass || 'btn-primary',
-    onclick: opts.onNext,
-    disabled: opts.disabled ? 'disabled' : null
-  }, opts.nextLabel || 'Continue'));
-  return wrap;
-}
-
-function renderStep0() {
-  // Who you are + which home. Asked first so emergency screen knows where + who.
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  screen.appendChild(el('p', { class: 'step-eyebrow' }, 'Who and where'));
-  screen.appendChild(el('h2', { class: 'step-title' }, 'Tell us a bit about yourself'));
-  screen.appendChild(el('p', { class: 'step-hint' }, 'So we can route this and reach you with updates.'));
-
-  // Home FIRST per Mark's feedback
-  const homeOpts = [{ value: '', label: 'Choose a home...' }].concat(HOMES.map(h => ({ value: h, label: h })));
-  screen.appendChild(field('Which home are you in?', selectField('home', state.home, homeOpts), null, true));
-
-  screen.appendChild(field('Your name', textField('name', state.name, 'Sarah K'), null, true));
-  screen.appendChild(field('Your role', selectField('role', state.role, ROLES), null, true));
-  screen.appendChild(field('Best way to reach you', selectField('contactMethod', state.contactMethod, ['WhatsApp', 'Phone call', 'Email']), null, true));
-  screen.appendChild(field('Contact number or email', textField('contactValue', state.contactValue, 'e.g. 07700 900123 or sarah@hearthomeliving.co.uk'), null, true));
-
-  screen.appendChild(navButtons({ back: false, onNext: () => {
-    if (!state.home) { alert('Please choose which home you are in.'); return; }
-    if (!state.name.trim()) { alert('Your name is required.'); return; }
-    if (!state.contactValue.trim()) { alert('Contact number or email is required.'); return; }
-    if (state.contactMethod === 'Email' && !state.contactValue.includes('@')) { alert('That does not look like an email address.'); return; }
-    state.step = 1; render();
-  } }));
-}
-
-function makeEmergencyItem(id, label, cls) {
-  const item = el('div', { class: 'check-item ' + (cls || '') });
-  const cb = el('input', { type: 'checkbox', id: 'cb-' + id, onchange: (e) => {
-    if (e.target.checked) state.emergencyTicked.push(label);
-    else state.emergencyTicked = state.emergencyTicked.filter(x => x !== label);
-    item.classList.toggle('checked', e.target.checked);
-  }});
-  if (state.emergencyTicked.includes(label)) { cb.checked = true; item.classList.add('checked'); }
-  item.appendChild(cb);
-  item.appendChild(el('label', { for: 'cb-' + id }, label));
-  return item;
-}
-
-function autoLogEmergency() {
-  // Silent fire-and-forget POST to n8n. User does not see this; they should be on the phone.
-  if (state.emergencyLogged) return;
-  state.emergencyLogged = true;
-  const webhook = settings.webhook_url || DEFAULT_SETTINGS.webhook_url;
-  const ref = 'EMERG-2026-' + String(Math.floor(Math.random() * 9000) + 1000);
-  state.refNumber = ref;
-  if (!webhook) return;
-  const payload = {
-    is_emergency: true,
-    reference: ref,
-    submitted_at: new Date().toISOString(),
-    notify_mark_to: settings.notify_mark_to || DEFAULT_SETTINGS.notify_mark_to,
-    notify_emergency_to: settings.notify_emergency_to || DEFAULT_SETTINGS.notify_emergency_to,
-    submitter: {
-      name: state.name,
-      role: state.role,
-      contact_method: state.contactMethod,
-      contact_value: state.contactValue
-    },
-    home: state.home,
-    emergency_999_ticked: state.emergencyTicked.filter(function (t) { return EMERGENCY_999.indexOf(t) !== -1; }),
-    emergency_oncall_ticked: state.emergencyTicked.filter(function (t) { return ONCALL.indexOf(t) !== -1; })
-  };
-  fetch(webhook, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(function () { /* silent */ });
-}
-
-function renderEmergencyScreen() {
-  autoLogEmergency();
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  screen.appendChild(el('div', { class: 'danger-banner', html:
-    '<strong>This is not a maintenance ticket.</strong> Based on what you ticked, follow the right escalation path NOW. We have already logged this for the maintenance team to see.'
-  }));
-
-  const has999 = state.emergencyTicked.some(t => EMERGENCY_999.includes(t));
-  const hasOncall = state.emergencyTicked.some(t => ONCALL.includes(t));
-
-  if (has999) {
-    screen.appendChild(el('h2', { class: 'step-title' }, 'Call 999 now'));
-    screen.appendChild(el('p', { class: 'step-hint' }, 'Immediate danger to life.'));
-    screen.appendChild(el('ul', { style: 'font-size:14px; line-height: 1.6; padding-left: 18px;' }, [
-      el('li', null, 'Evacuate if needed.'),
-      el('li', null, 'Do not use switches if you smell gas.'),
-      el('li', null, 'Gas emergency: call 0800 111 999.'),
-      el('li', null, 'Then call 999.'),
-      el('li', { style: 'font-weight: 600;' }, 'And call your Manager now.')
-    ]));
-  }
-  if (hasOncall) {
-    screen.appendChild(el('h2', { class: 'step-title' }, 'Follow the on-call procedure'));
-    screen.appendChild(el('p', { class: 'step-hint' }, 'Immediate safeguarding risk that cannot be safely managed.'));
-    screen.appendChild(el('ul', { style: 'font-size:14px; line-height: 1.6; padding-left: 18px;' }, [
-      el('li', null, 'Call the on-call manager now.'),
-      el('li', null, 'Do not wait until morning.'),
-      el('li', { style: 'font-weight: 600;' }, 'And call your Manager now.')
-    ]));
-  }
-
-  screen.appendChild(el('div', { class: 'info-banner', style: 'margin-top: 12px;' },
-    'A record has been logged automatically with reference ' + state.refNumber + ' so the maintenance team know what is happening. You do not need to fill in the rest of the form right now. Focus on the call.'
-  ));
-
-  screen.appendChild(el('p', { class: 'foot-note' }, 'If you ticked something by mistake, go back and untick it.'));
-  screen.appendChild(navButtons({ onNext: () => { state.step = 1; render(); }, nextLabel: 'Back to the safety screen', backLabel: 'Close', primaryClass: 'btn-secondary' }));
-}
-
-function renderStep1() {
-  // Safety check, was Step 0 in v0.5. Now Step 1 so home + submitter are already captured.
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  screen.appendChild(el('p', { class: 'step-eyebrow' }, 'Safety first'));
-  screen.appendChild(el('h2', { class: 'step-title' }, 'Is any of this happening right now?'));
-  screen.appendChild(el('p', { class: 'step-hint' }, 'Tick anything that applies. If any of these are true, this form is not the right way to report it.'));
-
-  const list = el('div', { class: 'check-list' });
-
-  const heading = el('div', { class: 'field-label', style: 'margin: 4px 0 6px; color: #7f1d1d;' }, 'Immediate danger to life');
-  list.appendChild(heading);
-  EMERGENCY_999.forEach((c, i) => list.appendChild(makeEmergencyItem('e999_' + i, c, 'danger')));
-
-  const heading2 = el('div', { class: 'field-label', style: 'margin: 12px 0 6px; color: #78350f;' }, 'Immediate safeguarding risk');
-  list.appendChild(heading2);
-  ONCALL.forEach((c, i) => list.appendChild(makeEmergencyItem('oncall_' + i, c, 'danger')));
-
-  list.appendChild(el('p', { class: 'field-help', style: 'margin-top: 12px;' }, 'If nothing here applies, continue. If any apply, the next screen tells you what to do instead.'));
-  screen.appendChild(list);
-  screen.appendChild(navButtons({ onNext: () => {
-    if (state.emergencyTicked.length > 0) renderEmergencyScreen();
-    else { state.step = 2; render(); }
-  } }));
-}
-
-function renderStep2() {
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  screen.appendChild(el('p', { class: 'step-eyebrow' }, 'Before reporting'));
-  screen.appendChild(el('h2', { class: 'step-title' }, 'Quick checks first'));
-  screen.appendChild(el('p', { class: 'step-hint' }, 'Most issues have a simple explanation. Tick what you have already checked.'));
-
-  const list = el('div', { class: 'check-list' });
-  PRE_CHECKS.forEach((c, i) => {
-    const id = 'pre_' + i;
-    const item = el('div', { class: 'check-item' });
-    const cb = el('input', { type: 'checkbox', id: 'cb-' + id, onchange: (e) => {
-      state.preChecks[c] = e.target.checked;
-      item.classList.toggle('checked', e.target.checked);
-    }});
-    if (state.preChecks[c]) { cb.checked = true; item.classList.add('checked'); }
-    item.appendChild(cb);
-    item.appendChild(el('label', { for: 'cb-' + id }, c));
-    list.appendChild(item);
-  });
-  screen.appendChild(list);
-  screen.appendChild(el('p', { class: 'field-help', style: 'margin-top: 8px;' }, 'You can continue without ticking everything. Anything you tick saves time later in the report.'));
-  screen.appendChild(navButtons({ onNext: () => { state.step = 3; render(); } }));
-}
-
-function suggestCategories(query) {
-  // Returns up to 6 categories matching the query, ordered by relevance.
-  const q = String(query || '').toLowerCase().trim();
-  if (!q) return [];
-  const tokens = q.split(/\s+/).filter(Boolean);
-  const scores = {};
-  const allCats = Object.keys(SOP);
-  tokens.forEach(function (tok) {
-    const syns = SYNONYM_MAP[tok];
-    if (syns) {
-      syns.forEach(function (cat, idx) {
-        scores[cat] = (scores[cat] || 0) + (10 - idx);
-      });
-    }
-    allCats.forEach(function (cat) {
-      if (cat.toLowerCase().indexOf(tok) !== -1) {
-        scores[cat] = (scores[cat] || 0) + 5;
-      }
-    });
-  });
-  const ranked = Object.keys(scores).sort(function (a, b) { return scores[b] - scores[a]; });
-  return ranked.slice(0, 6);
-}
-
-function renderStep3() {
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  screen.appendChild(el('p', { class: 'step-eyebrow' }, 'What’s wrong'));
-  screen.appendChild(el('h2', { class: 'step-title' }, 'Describe the issue in your own words'));
-  screen.appendChild(el('p', { class: 'step-hint' }, 'Type what is broken, like "door locked" or "leak in bathroom" or "boiler not working". Tap the closest match below.'));
-
-  const queryInput = el('input', {
-    type: 'text',
-    id: 'f-categoryQuery',
-    value: state.categoryQuery || '',
-    placeholder: 'e.g. door jammed, leak under sink, no hot water',
-    oninput: function (e) {
-      state.categoryQuery = e.target.value;
-      refreshSuggestions();
-    }
-  });
-  screen.appendChild(field('Describe the issue', queryInput, null, true));
-
-  const sugWrap = el('div', { class: 'suggestion-list', id: 'category-suggestions' });
-  screen.appendChild(sugWrap);
-
-  const fallback = el('div', { style: 'margin-top: 10px; font-size: 13px;' }, [
-    el('span', { class: 'field-help' }, "Can't find a match? "),
-    el('button', { class: 'skip-link', onclick: function (ev) {
-      ev.preventDefault();
-      pickCategory('Other (not listed above)');
-    }}, "Use 'Other'")
-  ]);
-  screen.appendChild(fallback);
-
-  function pickCategory(cat) {
-    if (state.category !== cat) {
-      state.category = cat;
-      state.gateStatus = {};
-      state.gateSkipReasons = {};
-      state.urgentTicked = [];
-    }
-    refreshSuggestions();
-  }
-
-  function refreshSuggestions() {
-    const wrap = document.getElementById('category-suggestions');
-    if (!wrap) return;
-    wrap.innerHTML = '';
-    const suggestions = suggestCategories(state.categoryQuery);
-    if (suggestions.length === 0 && !state.category) {
-      wrap.appendChild(el('div', { class: 'field-help', style: 'padding: 8px 0;' }, 'Start typing to see matching categories.'));
-      return;
-    }
-    suggestions.forEach(function (cat) {
-      const item = el('div', {
-        class: 'check-item' + (state.category === cat ? ' checked' : ''),
-        style: 'cursor: pointer;',
-        onclick: function () { pickCategory(cat); }
-      }, [
-        el('span', { style: 'font-size: 18px; margin-right: 4px;' }, state.category === cat ? '✓' : '·'),
-        el('label', { style: 'cursor: pointer;' }, cat)
-      ]);
-      wrap.appendChild(item);
-    });
-    if (state.category) {
-      wrap.appendChild(el('div', { class: 'info-banner', style: 'margin-top: 12px;' }, 'Picked: ' + state.category + '. The next screen will show the safe checks from the maintenance manual for this category.'));
-      if (SOP[state.category] && SOP[state.category].ref) {
-        wrap.appendChild(el('p', { class: 'section-ref' }, SOP[state.category].ref));
-      }
-    }
-  }
-
-  refreshSuggestions();
-
-  screen.appendChild(navButtons({ onNext: () => {
-    if (!state.category) { alert('Type a few words and tap a category, or use Other.'); return; }
-    state.step = 4; render();
-  } }));
-}
-
-function renderStep4() {
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  const sop = SOP[state.category];
-  screen.appendChild(el('p', { class: 'step-eyebrow' }, 'SOP checks'));
-  screen.appendChild(el('h2', { class: 'step-title' }, state.category));
-  screen.appendChild(el('p', { class: 'step-hint' }, 'Tick each check you have done. If you cannot do one, tap Skip and tell us why.'));
-
-  const list = el('div', { class: 'check-list' });
-  sop.gates.forEach((g, i) => {
-    const id = 'gate_' + i;
-    const item = el('div', { class: 'check-item' });
-    const cb = el('input', { type: 'checkbox', id: 'cb-' + id, onchange: (e) => {
-      if (e.target.checked) state.gateStatus[g] = 'done';
-      else delete state.gateStatus[g];
-      item.classList.toggle('checked', e.target.checked);
-      if (e.target.checked) { item.classList.remove('skipped'); delete state.gateSkipReasons[g]; }
-    }});
-    if (state.gateStatus[g] === 'done') { cb.checked = true; item.classList.add('checked'); }
-
-    const lab = el('label', { for: 'cb-' + id }, g);
-    const skipBtn = el('button', { class: 'skip-link', onclick: (ev) => {
-      ev.preventDefault();
-      const skipped = item.classList.toggle('skipped');
-      if (!skipped) delete state.gateSkipReasons[g];
-      else state.gateSkipReasons[g] = state.gateSkipReasons[g] || '';
-      cb.checked = false;
-      delete state.gateStatus[g];
-      item.classList.remove('checked');
-    }}, 'Can’t do');
-    const skipReason = el('div', { class: 'skip-reason' }, [
-      el('input', { type: 'text', placeholder: 'Why not?', value: state.gateSkipReasons[g] || '', oninput: (e) => state.gateSkipReasons[g] = e.target.value })
-    ]);
-
-    item.appendChild(cb);
-    item.appendChild(lab);
-    item.appendChild(skipBtn);
-    item.appendChild(skipReason);
-    if (state.gateSkipReasons[g] !== undefined) item.classList.add('skipped');
-    list.appendChild(item);
-  });
-  screen.appendChild(list);
-  screen.appendChild(el('p', { class: 'section-ref' }, sop.ref));
-
-  screen.appendChild(navButtons({ onNext: () => {
-    const allAddressed = sop.gates.every(g => state.gateStatus[g] === 'done' || state.gateSkipReasons[g] !== undefined);
-    if (!allAddressed) { alert('Tick each check, or tap "Can’t do" and give a reason.'); return; }
-    state.step = 5; render();
-  } }));
-}
-
-function renderStep5() {
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  const sop = SOP[state.category];
-  screen.appendChild(el('p', { class: 'step-eyebrow' }, 'Severity flags'));
-  screen.appendChild(el('h2', { class: 'step-title' }, 'Anything urgent in there?'));
-  screen.appendChild(el('p', { class: 'step-hint' }, 'Tick anything that applies right now. Some of these escalate the response automatically.'));
-
-  if (sop.urgent.length === 0) {
-    screen.appendChild(el('p', { class: 'field-help' }, 'No category-specific urgent flags. Continue.'));
-  } else {
-    const list = el('div', { class: 'check-list' });
-    sop.urgent.forEach((u, i) => {
-      const id = 'urg_' + i;
-      const item = el('div', { class: 'check-item danger' });
-      const cb = el('input', { type: 'checkbox', id: 'cb-' + id, onchange: (e) => {
-        if (e.target.checked) state.urgentTicked.push(u);
-        else state.urgentTicked = state.urgentTicked.filter(x => x !== u);
-        item.classList.toggle('checked', e.target.checked);
-      }});
-      if (state.urgentTicked.includes(u)) { cb.checked = true; item.classList.add('checked'); }
-      item.appendChild(cb);
-      item.appendChild(el('label', { for: 'cb-' + id }, u));
-      list.appendChild(item);
-    });
-    screen.appendChild(list);
-  }
-
-  if (state.urgentTicked.length > 0) {
-    screen.appendChild(el('div', { class: 'warn-banner' }, 'These flags will be shown on the task so the maintenance team can see them during triage. They decide the severity.'));
-  }
-
-  screen.appendChild(navButtons({ onNext: () => {
-    state.step = 6; render();
-  } }));
-}
-
-function renderStep6() {
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  screen.appendChild(el('p', { class: 'step-eyebrow' }, 'Detail'));
-  screen.appendChild(el('h2', { class: 'step-title' }, 'Tell us what’s wrong'));
-  screen.appendChild(el('p', { class: 'step-hint' }, 'Plain English. No child names.'));
-
-  const desc = el('textarea', { id: 'f-description', placeholder: 'e.g. boiler in cupboard not firing; pressure reads 0.5 bar; no hot water since 8am',
-    oninput: (e) => state.description = e.target.value }, state.description || '');
-  screen.appendChild(field('What’s wrong', desc, 'Describe what is broken and where. The maintenance manual says: no child names in the description.', true));
-
-  // Multi-select rooms. If 'Other' is among them, show a text input.
-  const roomWrap = el('div', { class: 'check-list', style: 'max-height: 220px; overflow-y: auto;' });
-  ROOMS.forEach(function (r, i) {
-    const id = 'room_' + i;
-    const item = el('div', { class: 'check-item' + (state.rooms.indexOf(r) !== -1 ? ' checked' : '') });
-    const cb = el('input', {
-      type: 'checkbox',
-      id: 'cb-' + id,
-      checked: state.rooms.indexOf(r) !== -1 ? 'checked' : null,
-      onchange: function (e) {
-        if (e.target.checked) {
-          if (state.rooms.indexOf(r) === -1) state.rooms.push(r);
-        } else {
-          state.rooms = state.rooms.filter(function (x) { return x !== r; });
-          if (r === 'Other') state.roomOther = '';
-        }
-        item.classList.toggle('checked', e.target.checked);
-        const otherBox = document.getElementById('room-other-wrap');
-        if (otherBox) otherBox.style.display = state.rooms.indexOf('Other') !== -1 ? 'block' : 'none';
-      }
-    });
-    item.appendChild(cb);
-    item.appendChild(el('label', { for: 'cb-' + id }, r));
-    roomWrap.appendChild(item);
-  });
-  screen.appendChild(field('Which room(s)?', roomWrap, 'Tick all that apply. Mandatory per the manual.', true));
-
-  const otherWrap = el('div', { id: 'room-other-wrap', style: state.rooms.indexOf('Other') !== -1 ? 'display: block; margin-top: 4px;' : 'display: none; margin-top: 4px;' }, [
-    el('input', {
-      type: 'text',
-      id: 'f-roomOther',
-      value: state.roomOther || '',
-      placeholder: 'Describe where the issue is',
-      oninput: function (e) { state.roomOther = e.target.value; }
-    })
-  ]);
-  screen.appendChild(otherWrap);
-
-  const now = new Date();
-  const isoLocal = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-  if (!state.noticedAt) state.noticedAt = isoLocal; // capture the default so it persists into the payload even if untouched
-  screen.appendChild(field('When did you first notice?', el('input', { type: 'datetime-local', id: 'f-noticedAt', value: state.noticedAt,
-    max: isoLocal, oninput: (e) => state.noticedAt = e.target.value }), null, true));
-
-  screen.appendChild(el('div', { class: 'warn-banner', style: 'margin-top: 4px;' },
-    'Frame the photo on the broken thing only. No children in shot. No documents with names. No medication labels. Photos are stored in ClickUp and emailed to the maintenance team, so they leave the home.'
-  ));
-
-  const uploader = el('label', { class: 'photo-uploader' }, [
-    el('span', { class: 'icon' }, '📷'),
-    el('span', null, 'Take or upload photos (mandatory, up to 5)'),
-    el('input', { type: 'file', accept: 'image/*', capture: 'environment', multiple: 'multiple', onchange: handlePhotos })
-  ]);
-  screen.appendChild(field('Photos', uploader, 'Mandatory per the manual. Photos are resized in your browser before sending so submission stays fast.', true));
-
-  const photoList = el('div', { class: 'photo-list', id: 'photo-list' });
-  refreshPhotoList(photoList);
-  screen.appendChild(photoList);
-
-  screen.appendChild(field('Any children in the affected area?', selectField('childrenInArea', state.childrenInArea, ['No', 'Yes']), 'Recorded on the task. The maintenance team uses this in triage.'));
-
-  screen.appendChild(navButtons({ onNext: () => {
-    if (!state.description.trim()) { alert('Description is mandatory.'); return; }
-    if (state.description.trim().length < 10) { alert('Please describe what is wrong in a bit more detail (at least 10 characters).'); return; }
-    if (state.rooms.length === 0) { alert('Choose at least one room.'); return; }
-    if (state.rooms.indexOf('Other') !== -1 && !state.roomOther.trim()) { alert('Please describe where the issue is in the Other text box.'); return; }
-    if (!state.noticedAt) { alert('Set when you first noticed the issue.'); return; }
-    if (state.photos.length === 0) { alert('At least one photo is mandatory per the manual.'); return; }
-    state.step = 7; render();
-  } }));
-}
-
-function compressImage(file, maxEdge, quality) {
-  return new Promise(function (resolve, reject) {
-    const reader = new FileReader();
-    reader.onload = function (ev) {
-      const img = new Image();
-      img.onload = function () {
-        let w = img.naturalWidth;
-        let h = img.naturalHeight;
-        const scale = Math.min(1, maxEdge / Math.max(w, h));
-        w = Math.round(w * scale);
-        h = Math.round(h * scale);
-        const canvas = document.createElement('canvas');
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, w, h);
-        ctx.drawImage(img, 0, 0, w, h);
-        const dataUrl = canvas.toDataURL('image/jpeg', quality);
-        const b64 = (dataUrl.split(',')[1] || '');
-        const bytes = Math.floor(b64.length * 3 / 4);
-        resolve({ dataUrl: dataUrl, width: w, height: h, bytes: bytes });
-      };
-      img.onerror = function () { reject(new Error('Could not decode image')); };
-      img.src = ev.target.result;
-    };
-    reader.onerror = function () { reject(new Error('Could not read file')); };
-    reader.readAsDataURL(file);
-  });
-}
-
-function handlePhotos(ev) {
-  const files = Array.from(ev.target.files || []);
-  const rejected = [];
-  const accepted = [];
-  files.slice(0, 5 - state.photos.length).forEach(function (f) {
-    if (!f.type || f.type.indexOf('image/') !== 0) { rejected.push(f.name + ' (not an image)'); return; }
-    if (f.size < MIN_PHOTO_BYTES) { rejected.push(f.name + ' (too small, looks like an icon or thumbnail)'); return; }
-    accepted.push(f);
-  });
-  ev.target.value = '';
-
-  accepted.forEach(function (f) {
-    compressImage(f, 1600, 0.85).then(function (out) {
-      state.photos.push({
-        name: f.name.replace(/\.[^.]+$/, '') + '.jpg',
-        original_name: f.name,
-        original_bytes: f.size,
-        bytes: out.bytes,
-        type: 'image/jpeg',
-        width: out.width,
-        height: out.height,
-        dataUrl: out.dataUrl
-      });
-      refreshPhotoList(document.getElementById('photo-list'));
-    }).catch(function (err) {
-      alert('Could not process ' + f.name + ': ' + (err && err.message ? err.message : 'unknown error'));
-    });
-  });
-
-  if (rejected.length) {
-    alert('These files were not added:\n\n' + rejected.join('\n') + '\n\nPhotos need to be real images and at least ' + Math.round(MIN_PHOTO_BYTES / 1024) + ' KB.');
-  }
-}
-
-function refreshPhotoList(container) {
-  if (!container) return;
-  container.innerHTML = '';
-  state.photos.forEach((p, i) => {
-    const t = el('div', { class: 'photo-tile', style: 'background-image: url(' + p.dataUrl + ')' });
-    t.appendChild(el('button', { class: 'remove', onclick: (e) => { e.preventDefault(); state.photos.splice(i, 1); refreshPhotoList(container); } }, '×'));
-    container.appendChild(t);
-  });
-}
-
-function renderStep7() {
-  // Review screen. Was Step 8 in v0.5. No severity row.
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  screen.appendChild(el('p', { class: 'step-eyebrow' }, 'Review'));
-  screen.appendChild(el('h2', { class: 'step-title' }, 'Check this looks right'));
-
-  const sum = el('div', { class: 'summary-card' });
-  function row(label, value) {
-    return el('div', { class: 'summary-row' }, [el('span', { class: 'label' }, label), el('span', { class: 'value' }, value || '—')]);
-  }
-  sum.appendChild(row('Home', state.home));
-  sum.appendChild(row('Submitter', state.name + ' (' + state.role + ')'));
-  sum.appendChild(row('Reachable on', state.contactMethod + ' — ' + state.contactValue));
-  sum.appendChild(row('Category', state.category));
-  var roomText = state.rooms.slice();
-  if (state.rooms.indexOf('Other') !== -1 && state.roomOther) {
-    roomText = roomText.filter(function (r) { return r !== 'Other'; }).concat(['Other: ' + state.roomOther]);
-  }
-  sum.appendChild(row('Room(s)', roomText.join(', ')));
-  sum.appendChild(row('Children in area', state.childrenInArea));
-  sum.appendChild(row('First noticed', state.noticedAt));
-  sum.appendChild(row('Photos', String(state.photos.length)));
-
-  const gateDone = Object.keys(state.gateStatus).filter(k => state.gateStatus[k] === 'done').length;
-  const gateSkipped = Object.keys(state.gateSkipReasons).length;
-  sum.appendChild(row('SOP checks', gateDone + ' done, ' + gateSkipped + ' skipped'));
-
-  if (state.urgentTicked.length > 0) {
-    sum.appendChild(row('Urgent flags', state.urgentTicked.length + ' ticked'));
-  }
-
-  const descRow = el('div', { class: 'summary-row block' }, [
-    el('span', { class: 'label' }, 'Description'),
-    el('span', { class: 'value' }, state.description)
-  ]);
-  sum.appendChild(descRow);
-
-  screen.appendChild(sum);
-
-  screen.appendChild(el('p', { class: 'field-help', style: 'margin-top: 10px;' }, 'The maintenance team will set severity when they triage this. You do not need to.'));
-
-  screen.appendChild(navButtons({ onNext: submit, nextLabel: 'Submit request' }));
-}
-
-function buildPayload() {
-  return {
-    is_emergency: false,
-    reference: state.refNumber,
-    submitted_at: new Date().toISOString(),
-    notify_mark_to: settings.notify_mark_to || DEFAULT_SETTINGS.notify_mark_to,
-    notify_emergency_to: settings.notify_emergency_to || DEFAULT_SETTINGS.notify_emergency_to,
-    notify_submitter_to: settings.notify_submitter_to_override || state.contactValue || DEFAULT_SETTINGS.notify_mark_to,
-    submitter: {
-      name: state.name,
-      role: state.role,
-      contact_method: state.contactMethod,
-      contact_value: state.contactValue
-    },
-    home: state.home,
-    rooms: state.rooms,
-    room_other_text: state.roomOther || '',
-    category: state.category,
-    category_query: state.categoryQuery,
-    children_in_area: state.childrenInArea,
-    noticed_at: state.noticedAt,
-    description: state.description,
-    pre_checks_completed: Object.keys(state.preChecks).filter(k => state.preChecks[k]),
-    sop_gates_done: Object.keys(state.gateStatus).filter(k => state.gateStatus[k] === 'done'),
-    sop_gates_skipped: Object.keys(state.gateSkipReasons).map(k => ({ check: k, reason: state.gateSkipReasons[k] })),
-    urgent_flags_ticked: state.urgentTicked,
-    photos_count: state.photos.length,
-    photos: state.photos.map(function (p) {
-      return {
-        name: p.name,
-        type: p.type,
-        bytes: p.bytes,
-        width: p.width,
-        height: p.height,
-        data_url: p.dataUrl
-      };
-    })
-  };
-}
-
-let lastSubmitStatus = null;
-
-function submit() {
-  state.refNumber = 'MAINT-2026-' + String(Math.floor(Math.random() * 9000) + 1000);
-  const webhook = settings.webhook_url || DEFAULT_SETTINGS.webhook_url;
-  lastSubmitStatus = webhook ? 'sending' : 'no-webhook';
-  state.step = 8;
-  render();
-  if (!webhook) return;
-  const payload = buildPayload();
-  fetch(webhook, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).then(function (res) {
-    lastSubmitStatus = res.ok ? 'success' : ('http-' + res.status);
-    if (state.step === 8) render();
-  }).catch(function (err) {
-    lastSubmitStatus = 'error: ' + ((err && err.message) || 'fetch failed');
-    if (state.step === 8) render();
-  });
-}
-
-const SETTINGS_PASSWORD = 'hhladmin-maintenance';
-
-// Password-gate the settings panel. Client-side only; password is visible in source.
-// Purpose: prevent House Managers accidentally changing recipient email or webhook URL.
-// Not real security. Rotate the password by editing this file.
-function openSettings() {
-  const pw = window.prompt('Settings are admin-only. Enter the password:');
-  if (pw === null) return; // user hit cancel
-  if (pw !== SETTINGS_PASSWORD) {
-    window.alert('Incorrect password.');
+};
+
+window.addEventListener('load', function () {
+  const params = new URLSearchParams(location.search);
+  const token = params.get('token');
+  const mock = params.get('mock');
+  if (mock === '1') {
+    state.token = token || 'MOCK';
+    state.task = MOCK_TASK;
+    state.screen = 'main';
+    render();
     return;
   }
+  if (!token) {
+    state.screen = 'error';
+    state.error = 'no-token';
+    render();
+    return;
+  }
+  state.token = token;
+  fetchTask(token);
+});
+
+async function fetchTask(token) {
+  state.screen = 'loading';
+  render();
+  try {
+    const url = new URL(settings.load_webhook_url);
+    url.searchParams.set('token', token);
+    const res = await fetch(url.toString(), { method: 'GET' });
+    if (res.status === 404) {
+      state.screen = 'error';
+      state.error = 'not-found';
+      render();
+      return;
+    }
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (data && data.ok === false) {
+      state.screen = 'error';
+      state.error = data.reason || 'not-found';
+      state.errorDetail = data.detail || '';
+      render();
+      return;
+    }
+    state.task = data;
+    state.screen = 'main';
+    render();
+  } catch (e) {
+    state.screen = 'error';
+    state.error = 'network';
+    state.errorDetail = e && e.message || '';
+    render();
+  }
+}
+
+async function submitAction(action, note) {
+  state.submitting = true;
+  render();
+  try {
+    const res = await fetch(settings.submit_webhook_url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: state.token,
+        action: action,
+        notes: note || '',
+        submitted_at: new Date().toISOString()
+      })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (data && data.ok === false) throw new Error(data.error || 'Server error');
+    state.submitting = false;
+    state.actionType = action;
+    state.screen = 'success';
+    render();
+  } catch (e) {
+    state.submitting = false;
+    state.screen = 'error';
+    state.error = 'submit-failed';
+    state.errorDetail = e && e.message || '';
+    render();
+  }
+}
+
+function render() {
+  const r = root();
+  clear(r);
+  if (state.task && state.task.reference) setSubtitle(state.task.reference);
+  else if (state.screen === 'loading') setSubtitle('Loading...');
+  else setSubtitle('');
+  switch (state.screen) {
+    case 'loading': return renderLoading(r);
+    case 'main': return renderMain(r);
+    case 'confirm-complete': return renderConfirmComplete(r);
+    case 'add-notes': return renderAddNotes(r);
+    case 'confirm-escalate': return renderConfirmEscalate(r);
+    case 'success': return renderSuccess(r);
+    case 'error': return renderError(r);
+  }
+}
+
+function renderLoading(r) {
+  r.appendChild(el('div', { class: 'spinner' }));
+  r.appendChild(el('div', { class: 'loading-text' }, 'Loading task details...'));
+}
+
+function renderMain(r) {
+  const t = state.task;
+
+  r.appendChild(el('p', { class: 'step-eyebrow' }, 'Follow-up'));
+  r.appendChild(el('h2', { class: 'step-title' }, t.category || 'Maintenance task'));
+  r.appendChild(el('p', { class: 'step-hint' }, 'Coordinate with the contractor below, then mark the job complete here when the work is done.'));
+
+  // Task summary
+  const summary = el('div', { class: 'summary-card' });
+  summary.appendChild(el('span', { class: 'reference' }, t.reference || 'MAINT'));
+  summary.appendChild(el('div', { class: 'home-line' }, t.home || 'Unknown home'));
+  summary.appendChild(el('div', { class: 'category-line' }, [
+    t.category || '',
+    t.rooms_display ? ' • ' + t.rooms_display : ''
+  ].join('')));
+  if (t.description) {
+    summary.appendChild(el('div', { class: 'description' }, t.description));
+  }
+  if (t.submitted_at) {
+    summary.appendChild(el('div', { class: 'meta' }, 'Submitted ' + formatDate(t.submitted_at)));
+  }
+  if (Array.isArray(t.photos) && t.photos.length > 0) {
+    const grid = el('div', { class: 'photo-grid' });
+    t.photos.forEach(function (p) {
+      const url = typeof p === 'string' ? p : (p && p.url);
+      if (!url) return;
+      grid.appendChild(el('button', {
+        class: 'photo-thumb',
+        style: 'background-image: url(\'' + url.replace(/'/g, "\\'") + '\');',
+        onclick: function () { showLightbox(url); }
+      }));
+    });
+    summary.appendChild(grid);
+  }
+  r.appendChild(summary);
+
+  // Manager notes so far, if any
+  if (t.manager_notes_so_far && String(t.manager_notes_so_far).trim().length > 0) {
+    const nsf = el('div', { class: 'notes-so-far' });
+    nsf.appendChild(el('span', { class: 'label' }, 'Your notes so far'));
+    nsf.appendChild(document.createTextNode(String(t.manager_notes_so_far)));
+    r.appendChild(nsf);
+  }
+
+  // Contractor card
+  const c = t.contractor || {};
+  const cc = el('div', { class: 'contractor-card' });
+  if (c.trade) cc.appendChild(el('span', { class: 'trade-badge' }, c.trade));
+  cc.appendChild(el('div', { class: 'name' }, c.name || '(contractor not set)'));
+  if (c.phone) {
+    const row = el('div', { class: 'contact-row' });
+    row.appendChild(el('span', { class: 'icon' }, '☎'));
+    row.appendChild(el('a', { href: 'tel:' + c.phone.replace(/\s/g, '') }, c.phone));
+    cc.appendChild(row);
+  }
+  if (c.email) {
+    const row = el('div', { class: 'contact-row' });
+    row.appendChild(el('span', { class: 'icon' }, '✉'));
+    row.appendChild(el('a', { href: 'mailto:' + c.email }, c.email));
+    cc.appendChild(row);
+  }
+  if (c.notes) cc.appendChild(el('div', { class: 'notes' }, c.notes));
+  r.appendChild(cc);
+
+  // Action buttons
+  const actions = el('div', { class: 'action-buttons' });
+  actions.appendChild(makeActionBtn('complete', '✓', 'Mark complete', 'The work is done and the issue is resolved.', function () {
+    state.screen = 'confirm-complete';
+    state.actionNote = '';
+    render();
+  }));
+  actions.appendChild(makeActionBtn('notes', '✎', 'Add notes', 'Log an update without closing the task.', function () {
+    state.screen = 'add-notes';
+    state.actionNote = '';
+    render();
+  }));
+  actions.appendChild(makeActionBtn('escalate', '⚠', 'Escalate to Maintenance Team', 'You need help from Mark and the team.', function () {
+    state.screen = 'confirm-escalate';
+    state.actionNote = '';
+    render();
+  }));
+  r.appendChild(actions);
+}
+
+function makeActionBtn(cls, icon, main, sub, onclick) {
+  const btn = el('button', { class: 'action-btn ' + cls, onclick: onclick });
+  btn.appendChild(el('span', { class: 'icon' }, icon));
+  const lb = el('div', { class: 'label-block' });
+  lb.appendChild(el('div', { class: 'label-main' }, main));
+  lb.appendChild(el('div', { class: 'label-sub' }, sub));
+  btn.appendChild(lb);
+  return btn;
+}
+
+function renderConfirmComplete(r) {
+  r.appendChild(el('p', { class: 'step-eyebrow' }, 'Confirm'));
+  r.appendChild(el('h2', { class: 'step-title' }, 'Mark this task complete?'));
+  r.appendChild(el('p', { class: 'step-hint' }, 'This closes the task in ClickUp and lets the Maintenance Team know it is done.'));
+
+  const noteField = el('div', { class: 'field' });
+  noteField.appendChild(el('label', { class: 'field-label' }, 'Optional closing note'));
+  const ta = el('textarea', {
+    placeholder: 'e.g. Fixed on Tuesday, all working now.',
+    oninput: function (e) { state.actionNote = e.target.value; }
+  });
+  ta.value = state.actionNote || '';
+  noteField.appendChild(ta);
+  noteField.appendChild(el('div', { class: 'field-help' }, 'Leave blank if nothing to add.'));
+  r.appendChild(noteField);
+
+  const nav = el('div', { class: 'nav' });
+  nav.appendChild(el('button', {
+    class: 'btn-secondary',
+    onclick: function () { state.screen = 'main'; render(); },
+    disabled: state.submitting ? 'disabled' : null
+  }, 'Back'));
+  nav.appendChild(el('button', {
+    class: 'btn-success',
+    onclick: function () { submitAction('complete', state.actionNote); },
+    disabled: state.submitting ? 'disabled' : null
+  }, state.submitting ? 'Submitting...' : 'Confirm complete'));
+  r.appendChild(nav);
+}
+
+function renderAddNotes(r) {
+  r.appendChild(el('p', { class: 'step-eyebrow' }, 'Add notes'));
+  r.appendChild(el('h2', { class: 'step-title' }, 'What is the update?'));
+  r.appendChild(el('p', { class: 'step-hint' }, 'This appends a note to the task without closing it. The Maintenance Team will see it.'));
+
+  const noteField = el('div', { class: 'field' });
+  noteField.appendChild(el('label', { class: 'field-label' }, 'Your note'));
+  const ta = el('textarea', {
+    placeholder: 'e.g. Contractor visited today, needs to order a part, back Thursday.',
+    oninput: function (e) { state.actionNote = e.target.value; }
+  });
+  ta.value = state.actionNote || '';
+  noteField.appendChild(ta);
+  r.appendChild(noteField);
+
+  const nav = el('div', { class: 'nav' });
+  nav.appendChild(el('button', {
+    class: 'btn-secondary',
+    onclick: function () { state.screen = 'main'; render(); },
+    disabled: state.submitting ? 'disabled' : null
+  }, 'Back'));
+  nav.appendChild(el('button', {
+    class: 'btn-primary',
+    onclick: function () { submitAction('notes', state.actionNote); },
+    disabled: state.submitting || !state.actionNote.trim() ? 'disabled' : null
+  }, state.submitting ? 'Submitting...' : 'Add note'));
+  r.appendChild(nav);
+}
+
+function renderConfirmEscalate(r) {
+  r.appendChild(el('p', { class: 'step-eyebrow' }, 'Escalate'));
+  r.appendChild(el('h2', { class: 'step-title' }, 'Escalate to Maintenance Team?'));
+
+  const warn = el('div', { class: 'danger-banner' });
+  warn.textContent = 'This flags the task as needing the Maintenance Team’s attention. They will be notified with an urgent email.';
+  r.appendChild(warn);
+
+  const noteField = el('div', { class: 'field' });
+  noteField.appendChild(el('label', { class: 'field-label' }, 'Reason for escalation'));
+  const ta = el('textarea', {
+    placeholder: 'e.g. Contractor unresponsive since Monday, can’t reach them, resident needs it fixed today.',
+    oninput: function (e) { state.actionNote = e.target.value; }
+  });
+  ta.value = state.actionNote || '';
+  noteField.appendChild(ta);
+  noteField.appendChild(el('div', { class: 'field-help' }, 'A short reason helps the team pick this up quickly.'));
+  r.appendChild(noteField);
+
+  const nav = el('div', { class: 'nav' });
+  nav.appendChild(el('button', {
+    class: 'btn-secondary',
+    onclick: function () { state.screen = 'main'; render(); },
+    disabled: state.submitting ? 'disabled' : null
+  }, 'Back'));
+  nav.appendChild(el('button', {
+    class: 'btn-danger',
+    onclick: function () { submitAction('escalate', state.actionNote); },
+    disabled: state.submitting || !state.actionNote.trim() ? 'disabled' : null
+  }, state.submitting ? 'Submitting...' : 'Escalate'));
+  r.appendChild(nav);
+}
+
+function renderSuccess(r) {
+  const type = state.actionType;
+  let iconClass = 'success';
+  let title = 'Done';
+  let body = '';
+  if (type === 'complete') {
+    title = 'Task marked complete';
+    body = 'Thanks, we have closed the task in ClickUp and notified the Maintenance Team.';
+  } else if (type === 'notes') {
+    title = 'Note added';
+    body = 'Your note is on the task and the Maintenance Team has been notified. You can close this tab.';
+  } else if (type === 'escalate') {
+    iconClass = 'warn';
+    title = 'Escalation sent';
+    body = 'The Maintenance Team has been notified with your reason. They will pick this up shortly.';
+  }
+  r.appendChild(el('div', { class: 'result-icon ' + iconClass }, iconClass === 'warn' ? '⚠' : '✓'));
+  r.appendChild(el('h2', { class: 'result-title' }, title));
+  r.appendChild(el('p', { class: 'result-body' }, body));
+  r.appendChild(el('p', { class: 'result-body', style: 'font-size: 12px; opacity: 0.7; margin-top: 24px;' }, 'You can close this tab now.'));
+}
+
+function renderError(r) {
+  let iconClass = 'error';
+  let icon = '✕';
+  let title = 'Something went wrong';
+  let body = '';
+  switch (state.error) {
+    case 'no-token':
+      title = 'Missing link details';
+      body = 'This page needs to be opened from the link in your Maintenance email. If you copied the URL by hand, some of it may have been dropped.';
+      break;
+    case 'not-found':
+      title = 'Link not valid';
+      body = 'This follow-up link is no longer valid. The task may already be closed or escalated. Contact the Maintenance Team if you think this is wrong.';
+      iconClass = 'warn';
+      icon = '?';
+      break;
+    case 'network':
+      title = 'Couldn’t reach the server';
+      body = 'Check your internet and try refreshing the page.';
+      break;
+    case 'submit-failed':
+      title = 'Submission failed';
+      body = 'Your update was not sent. Check your internet and try again. If it keeps failing, contact the Maintenance Team.';
+      break;
+    default:
+      body = 'Please try refreshing the page. If it keeps happening, contact the Maintenance Team.';
+  }
+  r.appendChild(el('div', { class: 'result-icon ' + iconClass }, icon));
+  r.appendChild(el('h2', { class: 'result-title' }, title));
+  r.appendChild(el('p', { class: 'result-body' }, body));
+  if (settings.debug_mode && state.errorDetail) {
+    r.appendChild(el('p', { class: 'result-body', style: 'font-family: ui-monospace, monospace; font-size: 11px; margin-top: 16px; color: #9ca3af;' }, state.errorDetail));
+  }
+  if (state.error === 'network' || state.error === 'submit-failed') {
+    const nav = el('div', { class: 'nav' });
+    nav.appendChild(el('button', {
+      class: 'btn-primary',
+      onclick: function () {
+        if (state.error === 'network') fetchTask(state.token);
+        else { state.screen = 'main'; state.error = null; render(); }
+      }
+    }, 'Try again'));
+    r.appendChild(nav);
+  }
+}
+
+function showLightbox(url) {
+  const backdrop = el('div', { class: 'photo-lightbox', onclick: function () { backdrop.remove(); } });
+  backdrop.appendChild(el('img', { src: url, alt: '' }));
+  document.body.appendChild(backdrop);
+}
+
+/* Settings modal (password-gated) */
+function openSettings() {
+  const pw = prompt('Enter admin password');
+  if (pw === null) return;
+  if (pw !== SETTINGS_PASSWORD) { alert('Wrong password'); return; }
   renderSettings();
 }
 
 function renderSettings() {
-  const overlay = document.getElementById('settings-overlay');
-  overlay.style.display = 'flex';
-  overlay.innerHTML = '';
-  const modal = el('div', { class: 'settings-modal' });
-  modal.appendChild(el('h2', null, 'Settings'));
-  modal.appendChild(el('p', { class: 'lede' }, 'Settings saved to this device only. To change globally for everyone, an admin would update the n8n config.'));
+  const backdrop = el('div', { class: 'modal-backdrop', id: 'settings-backdrop' });
+  const modal = el('div', { class: 'modal' });
+  modal.appendChild(el('h2', {}, 'Settings'));
 
-  const routineParts = String(settings.notify_mark_to || '').split(',').map(function (x) { return x.trim(); });
-  const routineWrap = el('div');
-  for (let i = 0; i < 3; i++) {
-    routineWrap.appendChild(el('input', {
-      type: 'email',
-      id: 's-notify-mark-' + (i + 1),
-      value: routineParts[i] || '',
-      placeholder: i === 0 ? 'mark@hearthomeliving.co.uk' : '(optional)',
-      style: 'display: block; width: 100%; margin-bottom: 6px;'
-    }));
-  }
-  modal.appendChild(field('Routine notification recipients (up to 3)', routineWrap, 'Up to 3 email addresses for routine maintenance alerts. Fill in only what you need.', false));
+  modal.appendChild(makeField('Load webhook URL', el('input', {
+    type: 'url',
+    id: 's-load',
+    value: settings.load_webhook_url || ''
+  }), 'GET webhook that returns the task summary given a token.'));
 
-  const emergParts = String(settings.notify_emergency_to || '').split(',').map(function (x) { return x.trim(); });
-  const emergWrap = el('div');
-  for (let j = 0; j < 3; j++) {
-    emergWrap.appendChild(el('input', {
-      type: 'email',
-      id: 's-notify-emergency-' + (j + 1),
-      value: emergParts[j] || '',
-      placeholder: j === 0 ? 'laurence@hearthomeliving.co.uk' : '(optional)',
-      style: 'display: block; width: 100%; margin-bottom: 6px;'
-    }));
-  }
-  modal.appendChild(field('Emergency notification recipients (up to 3)', emergWrap, 'Up to 3 email addresses alerted when a House Manager ticks an Immediate Danger or Immediate Safeguarding item on Step 1. Fill in only what you need.', false));
+  modal.appendChild(makeField('Submit webhook URL', el('input', {
+    type: 'url',
+    id: 's-submit',
+    value: settings.submit_webhook_url || ''
+  }), 'POST webhook that receives complete / notes / escalate actions.'));
 
-  modal.appendChild(field('Override submitter confirmation to', el('input', {
-    type: 'email',
-    id: 's-notify-submitter',
-    value: settings.notify_submitter_to_override || '',
-    placeholder: '(leave blank to use the submitter\'s own contact)'
-  }), 'Optional. If blank, the submitter\'s own contact value from the form is used.', false));
+  const dbg = el('label', { style: 'display: flex; align-items: center; gap: 8px; font-size: 14px; color: #374151;' });
+  const dbgIn = el('input', { type: 'checkbox', id: 's-debug' });
+  if (settings.debug_mode) dbgIn.setAttribute('checked', 'checked');
+  dbg.appendChild(dbgIn);
+  dbg.appendChild(document.createTextNode('Debug mode (show error details)'));
+  modal.appendChild(dbg);
 
-  modal.appendChild(field('Webhook URL', el('input', {
-    type: 'text',
-    id: 's-webhook',
-    value: settings.webhook_url || '',
-    placeholder: DEFAULT_SETTINGS.webhook_url
-  }), 'Where the form POSTs on submit. Leave as default unless you have a different test or production endpoint.', false));
-
-  const debugWrap = el('div', { class: 'field' }, [
-    el('label', { class: 'field-label' }, 'Debug mode'),
-    el('div', { class: 'check-item' + (settings.debug_mode ? ' checked' : '') }, [
-      el('input', { type: 'checkbox', id: 's-debug', checked: settings.debug_mode ? 'checked' : null, onchange: (e) => {
-        e.target.parentElement.classList.toggle('checked', e.target.checked);
-      }}),
-      el('label', { for: 's-debug' }, 'Show raw JSON payload on the Sent screen')
-    ]),
-    el('div', { class: 'field-help' }, 'For sandbox testing only. Leave off for real users.')
-  ]);
-  modal.appendChild(debugWrap);
-
-  const actions = el('div', { class: 'actions' });
-  actions.appendChild(el('button', { class: 'btn-secondary', onclick: closeSettings }, 'Cancel'));
+  const actions = el('div', { class: 'modal-actions' });
+  actions.appendChild(el('button', {
+    class: 'btn-secondary',
+    onclick: function () { document.getElementById('settings-backdrop').remove(); }
+  }, 'Cancel'));
   actions.appendChild(el('button', {
     class: 'btn-primary',
     onclick: function () {
-      const newSettings = {
-        notify_mark_to: [1,2,3].map(function (n) { return (document.getElementById('s-notify-mark-' + n).value || '').trim(); }).filter(function (v) { return v; }).join(','),
-        notify_emergency_to: [1,2,3].map(function (n) { return (document.getElementById('s-notify-emergency-' + n).value || '').trim(); }).filter(function (v) { return v; }).join(','),
-        notify_submitter_to_override: document.getElementById('s-notify-submitter').value.trim(),
-        webhook_url: document.getElementById('s-webhook').value.trim() || DEFAULT_SETTINGS.webhook_url,
+      const s = {
+        load_webhook_url: document.getElementById('s-load').value.trim(),
+        submit_webhook_url: document.getElementById('s-submit').value.trim(),
         debug_mode: document.getElementById('s-debug').checked
       };
-      saveSettings(newSettings);
-      closeSettings();
+      settings = Object.assign({}, DEFAULT_SETTINGS, s);
+      saveSettingsToStorage(s);
+      document.getElementById('settings-backdrop').remove();
     }
   }, 'Save'));
   modal.appendChild(actions);
-
-  overlay.appendChild(modal);
-  overlay.onclick = function (e) { if (e.target === overlay) closeSettings(); };
+  backdrop.appendChild(modal);
+  document.getElementById('modal-root').appendChild(backdrop);
 }
 
-function closeSettings() {
-  const overlay = document.getElementById('settings-overlay');
-  overlay.style.display = 'none';
-  overlay.innerHTML = '';
+function makeField(label, input, help) {
+  const f = el('div', { class: 'field' });
+  f.appendChild(el('label', { class: 'field-label' }, label));
+  f.appendChild(input);
+  if (help) f.appendChild(el('div', { class: 'field-help' }, help));
+  return f;
 }
 
-function renderStep8() {
-  const screen = document.getElementById('screen');
-  screen.innerHTML = '';
-  screen.appendChild(el('div', { class: 'success-icon' }, '✓'));
-  screen.appendChild(el('h2', { class: 'step-title', style: 'text-align: center;' }, 'Submitted'));
-  screen.appendChild(el('div', { class: 'ref-num' }, state.refNumber));
-
-  if (lastSubmitStatus === 'sending') {
-    screen.appendChild(el('div', { class: 'info-banner', style: 'margin-top: 12px;' }, 'Posting to test pipeline...'));
-  } else if (lastSubmitStatus === 'success') {
-    screen.appendChild(el('div', { class: 'info-banner', style: 'margin-top: 12px;' }, 'Posted to test pipeline. Check your inbox plus the test list in ClickUp.'));
-  } else if (lastSubmitStatus === 'no-webhook') {
-    screen.appendChild(el('div', { class: 'warn-banner', style: 'margin-top: 12px;' }, 'No webhook configured. Payload below for manual POST.'));
-  } else if (lastSubmitStatus) {
-    screen.appendChild(el('div', { class: 'warn-banner', style: 'margin-top: 12px;' }, 'Post failed: ' + lastSubmitStatus + '. Workflow may be inactive, or browser blocked CORS / file:// fetch. Payload below for manual POST.'));
-  }
-
-  const next = el('div', { class: 'next-steps', style: 'margin-top: 12px;' });
-  next.innerHTML = '<strong>What happens next (in production):</strong><br>' +
-    '. You get a WhatsApp confirmation within a minute.<br>' +
-    '. Mark gets notified at his preferred channel based on severity.<br>' +
-    '. A contractor matching the category gets emailed within the hour with your photos and SOP results.<br>' +
-    '. If Severity is Urgent and Mark does not acknowledge in 5 minutes, Ruth is alerted.<br>' +
-    '. Reply to your WhatsApp with the reference number anytime to check status.';
-  screen.appendChild(next);
-
-  if (settings.debug_mode) {
-    screen.appendChild(el('p', { class: 'step-eyebrow', style: 'margin-top: 16px;' }, 'Payload sent (debug mode)'));
-    const payload = JSON.stringify(buildPayload(), null, 2);
-    screen.appendChild(el('div', { class: 'payload-preview' }, payload));
-  }
-
-  screen.appendChild(navButtons({ back: false, onNext: function () { resetState(); state.step = 0; render(); }, nextLabel: 'Log another issue', primaryClass: 'btn-secondary' }));
-}
-
-function resetState() {
-  lastSubmitStatus = null;
-  state.emergencyTicked = [];
-  state.emergencyLogged = false;
-  state.preChecks = {};
-  state.categoryQuery = '';
-  state.category = '';
-  state.gateStatus = {};
-  state.gateSkipReasons = {};
-  state.urgentTicked = [];
-  state.description = '';
-  state.rooms = [];
-  state.roomOther = '';
-  state.noticedAt = '';
-  state.photos = [];
-  state.childrenInArea = 'No';
-  state.refNumber = '';
-}
-
-function back() {
-  state.step = Math.max(state.step - 1, 0);
-  render();
-}
-
-function render() {
-  renderProgress();
-  switch (state.step) {
-    case 0: renderStep0(); break;
-    case 1: renderStep1(); break;
-    case 2: renderStep2(); break;
-    case 3: renderStep3(); break;
-    case 4: renderStep4(); break;
-    case 5: renderStep5(); break;
-    case 6: renderStep6(); break;
-    case 7: renderStep7(); break;
-    case 8: renderStep8(); break;
-    default: renderStep0();
-  }
-}
-
-render();
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('service-worker.js').catch(function () {
-      // Service worker registration failures are non-fatal. Form still works without offline support.
-    });
-  });
+function formatDate(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+      + ' at ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  } catch (e) { return iso; }
 }
 </script>
-
 </body>
 </html>

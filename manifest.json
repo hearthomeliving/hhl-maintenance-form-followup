@@ -1,7 +1,7 @@
 {
-  "name": "HAHL Maintenance Request",
-  "short_name": "HAHL Maintenance",
-  "description": "Report a maintenance issue at a Heart and Home Living home.",
+  "name": "HAHL Maintenance Follow-Up",
+  "short_name": "HAHL Follow-Up",
+  "description": "Follow up on a maintenance task at a Heart and Home Living home.",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",

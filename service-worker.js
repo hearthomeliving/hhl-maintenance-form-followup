@@ -1,8 +1,7 @@
-// Minimal service worker for the HAHL Maintenance form PWA.
-// Cache-first for the shell, network-first for the webhook POST (which is never cached).
-// Version bump invalidates the cache on next deploy.
+// Minimal service worker for the HAHL Maintenance Follow-Up PWA.
+// Cache-first for the shell, never cache webhook GET/POST (they carry per-task data).
 
-const CACHE_VERSION = 'hahl-maintenance-v6-3slots';
+const CACHE_VERSION = 'hahl-followup-v1';
 const SHELL = [
   './',
   './index.html',
@@ -27,17 +26,16 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('fetch', function (event) {
   const url = new URL(event.request.url);
-  // Never cache the webhook POSTs; let them go straight to the network.
   if (event.request.method !== 'GET') return;
-  if (url.hostname.endsWith('n8n.cloud') || url.hostname.endsWith('ruthbloch.app.n8n.cloud')) return;
-  // Cache-first for the shell.
+  // Never cache webhook responses; task data is per-request.
+  if (url.hostname.endsWith('n8n.cloud')) return;
   event.respondWith(
     caches.match(event.request).then(function (cached) {
       if (cached) return cached;
       return fetch(event.request).then(function (response) {
         if (response && response.status === 200 && url.origin === self.location.origin) {
-          const responseClone = response.clone();
-          caches.open(CACHE_VERSION).then(function (cache) { cache.put(event.request, responseClone); });
+          const clone = response.clone();
+          caches.open(CACHE_VERSION).then(function (cache) { cache.put(event.request, clone); });
         }
         return response;
       }).catch(function () { return cached; });

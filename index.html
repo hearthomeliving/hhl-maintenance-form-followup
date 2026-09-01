@@ -515,7 +515,8 @@ let state = {
   errorDetail: '',
   submitting: false,
   actionNote: '',
-  actionType: null
+  actionType: null,
+  rating: { arrived_on_time: '', fixed_first_visit: '', standard_of_work: '', would_use_again: '' }
 };
 
 function el(tag, attrs, children) {
@@ -626,6 +627,7 @@ async function submitAction(action, note) {
         token: state.token,
         action: action,
         notes: note || '',
+        rating: action === 'complete' ? state.rating : null,
         submitted_at: new Date().toISOString()
       })
     });
@@ -761,10 +763,40 @@ function makeActionBtn(cls, icon, main, sub, onclick) {
   return btn;
 }
 
+// Four contractor rating questions asked at the point of Mark Complete so we
+// build up performance data on Approved Contractors over time. All four are
+// required. Answers get posted alongside the complete action and the workflow
+// aggregates them onto the contractor's record.
+const RATING_QUESTIONS = [
+  { key: 'arrived_on_time', label: 'Did the contractor arrive when they said?', options: ['Yes', 'No', 'Not on time but same day'] },
+  { key: 'fixed_first_visit', label: 'Did they fix it on the first visit?', options: ['Yes', 'No', 'Partial'] },
+  { key: 'standard_of_work', label: 'Standard of work?', options: ['Excellent', 'Good', 'Fair', 'Poor'] },
+  { key: 'would_use_again', label: 'Would you use them again?', options: ['Yes', 'No', 'With reservations'] }
+];
+
 function renderConfirmComplete(r) {
   r.appendChild(el('p', { class: 'step-eyebrow' }, 'Confirm'));
   r.appendChild(el('h2', { class: 'step-title' }, 'Mark this task complete?'));
-  r.appendChild(el('p', { class: 'step-hint' }, 'This closes the task in ClickUp and lets the Maintenance Team know it is done.'));
+  r.appendChild(el('p', { class: 'step-hint' }, 'Answer the four short questions about the contractor, then confirm. This closes the task in ClickUp and adds the ratings to the contractor’s record.'));
+
+  // Rating block
+  RATING_QUESTIONS.forEach(function (q) {
+    const wrap = el('div', { class: 'field' });
+    wrap.appendChild(el('label', { class: 'field-label' }, q.label));
+    const grp = el('div', { class: 'rating-group', style: 'display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;' });
+    q.options.forEach(function (opt) {
+      const isSel = state.rating[q.key] === opt;
+      const btn = el('button', {
+        type: 'button',
+        class: isSel ? 'rating-pill selected' : 'rating-pill',
+        style: 'border:1px solid ' + (isSel ? '#059669' : '#d1d5db') + ';background:' + (isSel ? '#059669' : '#ffffff') + ';color:' + (isSel ? '#ffffff' : '#111827') + ';padding:8px 12px;border-radius:999px;font-size:14px;cursor:pointer;',
+        onclick: function () { state.rating[q.key] = opt; render(); }
+      }, opt);
+      grp.appendChild(btn);
+    });
+    wrap.appendChild(grp);
+    r.appendChild(wrap);
+  });
 
   const noteField = el('div', { class: 'field' });
   noteField.appendChild(el('label', { class: 'field-label' }, 'Optional closing note'));
@@ -777,6 +809,8 @@ function renderConfirmComplete(r) {
   noteField.appendChild(el('div', { class: 'field-help' }, 'Leave blank if nothing to add.'));
   r.appendChild(noteField);
 
+  const allAnswered = RATING_QUESTIONS.every(function (q) { return !!state.rating[q.key]; });
+
   const nav = el('div', { class: 'nav' });
   nav.appendChild(el('button', {
     class: 'btn-secondary',
@@ -785,8 +819,11 @@ function renderConfirmComplete(r) {
   }, 'Back'));
   nav.appendChild(el('button', {
     class: 'btn-success',
-    onclick: function () { submitAction('complete', state.actionNote); },
-    disabled: state.submitting ? 'disabled' : null
+    onclick: function () {
+      if (!allAnswered) { alert('Please answer all four rating questions before confirming.'); return; }
+      submitAction('complete', state.actionNote);
+    },
+    disabled: state.submitting || !allAnswered ? 'disabled' : null
   }, state.submitting ? 'Submitting...' : 'Confirm complete'));
   r.appendChild(nav);
 }

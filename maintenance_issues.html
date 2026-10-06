@@ -1,3 +1,6 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maintenance report builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -96,7 +99,29 @@
     .kpis{grid-template-columns:repeat(2,1fr)}
     .panels{grid-template-columns:1fr}
     .bar{grid-template-columns:104px 1fr 30px}
-    td.issue{min-width:220px}
+  }
+  @media (max-width:600px){
+    h1{font-size:1.2rem}
+    .controls{gap:9px 10px}
+    .ctl{flex:1 1 auto}
+    #q{flex:1 1 100%;min-width:0}
+    .presets{width:100%}
+    .presets button{flex:1 1 auto;text-align:center;padding:8px 6px}
+    .kpi{padding:11px 13px}
+    .kpi .n{font-size:1.45rem}
+    .bar{grid-template-columns:96px 1fr 28px}
+    /* issues table becomes stacked cards */
+    .tablescroll{max-height:none;overflow:visible}
+    table thead{display:none}
+    table, tbody, tr, td{display:block;width:auto}
+    tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;padding:11px 14px;border-bottom:1px solid var(--border)}
+    tbody tr:nth-child(even){background:transparent}
+    tbody td{padding:0;border:none}
+    td.date{order:1;color:var(--muted);font-size:.72rem;white-space:nowrap}
+    td.home{order:2;font-weight:600;font-size:.9rem;white-space:nowrap}
+    td.issue{order:3;flex-basis:100%;min-width:0;font-size:.9rem;margin:4px 0;line-height:1.4}
+    tbody td:nth-child(3){order:4}
+    tbody td:nth-child(5){order:5;margin-left:auto}
   }
 </style>
 
